@@ -1,0 +1,17 @@
+{
+  "Execution": {
+    "strategies":  [
+          "TitForTat",
+          "Friedman",
+          "Cooperate",
+          "Defect",
+          "Random",
+          "Sneaky",
+          "Tester",
+          "Punisher"
+    ],
+    "controls": {
+      "iteration": 100
+    }
+  }
+}
