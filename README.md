@@ -15,5 +15,8 @@ Install node (to execute js) and tsc (convert ts to js)
     node ./dist/gameorchestrator.js
 ```
 # Adding new strategies
-Simple to add by implementing "Strategy" interface defined in Strategy.ts. The strategies are stored in ./strategies folder
-Easier to copy something like TitForTat.ts to create an new one
+Simple to add by implementing "Strategy" interface defined in Strategy.ts. 
+The strategies are stored in ./Strategies folder
+Easier to copy something like TitForTat.ts to create an new one.
+
+Once the new strategy is created and stored in ./Strategies folder, add it to the "strategies" key in ./config/default.json
