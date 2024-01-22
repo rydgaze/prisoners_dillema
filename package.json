@@ -1,4 +1,10 @@
 {
+  "scripts": {
+    "build-ts": "tsc",
+    "build": "npm run build-ts",
+    "go": "node ./dist/gameorchestrator.js",
+    "start": "npm run build && npm run go"
+  },
   "dependencies": {
     "config": "^3.3.10"
   },
