@@ -24,7 +24,7 @@ function calcScore(leftAction: Action, rightAction: Action) {
         rightScore = 1
     }
 
-    return { leftScore, rightScore}
+    return { leftScore, rightScore }
 }
 
 export async function StrategySim(iterations: number,
@@ -34,38 +34,44 @@ export async function StrategySim(iterations: number,
     //console.log('Simulating iterations:', iterations, ' [', leftStrategyName, ' VS ', rightStrategyName, ']')
 
     // Import both the strategies from files
-    let l = await import("./Strategies/" + leftStrategyName)
-    let r = await import("./Strategies/" + rightStrategyName)
+    let l = null
+    let r = null
+    try {
+        l = await import("./Strategies/" + leftStrategyName)
+        r = await import("./Strategies/" + rightStrategyName)
+
+    } catch (e) {
+        console.log("FATAL:",e.message)
+        process.exit()
+    }
 
     let leftStrategy = new l.default()
     let rightStrategy = new r.default()
 
-
     let leftData = new StrategyData()
     let rightData = new StrategyData()
+
+    let leftTotal = 0
+    let rightTotal = 0
+
     leftData.myActions = []
     rightData.myActions = []
     leftData.opponentActions = []
     rightData.opponentActions = []
-
-
-
-    let leftTotal = 0
-    let rightTotal = 0
 
     for (let iteration = 0; iteration < iterations; iteration++) {
         leftData.iteration = iteration
         rightData.iteration = iteration
         let leftAction = leftStrategy.getAction(leftData)
         let rightAction = rightStrategy.getAction(rightData)
-    
+
         leftData.myActions.push(leftAction)
         leftData.opponentActions.push(rightAction)
 
         rightData.myActions.push(rightAction)
         rightData.opponentActions.push(leftAction)
 
-        let score  = calcScore(leftAction, rightAction)
+        let score = calcScore(leftAction, rightAction)
         //console.log('ACTION: ',leftStrategy.name(), ' : ', leftAction , ', ', rightStrategy.name(), ' : ', rightAction)
 
         leftTotal += score.leftScore
@@ -77,4 +83,3 @@ export async function StrategySim(iterations: number,
     return leftTotal
 
 }
-
